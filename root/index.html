@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html class='' lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Next Thursday</title>
+
+</head>
+
+<body>
+
+  <span>The next Thursday will be:</span>
+  <div id="nextThursday">
+  </div>
+
+  <span>Whats next after?:</span>
+  <input type="date" id="whichDate" />
+  <button onClick="updateThursday()">Update</button>
+
+<script>
+var HttpClient = function() {
+    this.get = function(aUrl, aCallback) {
+        var anHttpRequest = new XMLHttpRequest();
+        anHttpRequest.onreadystatechange = function() {
+            if (anHttpRequest.readyState == 4 && anHttpRequest.status == 200)
+                aCallback(anHttpRequest.responseText);
+        }
+        anHttpRequest.open( "GET", aUrl, true );
+        anHttpRequest.send( null );
+    }
+}
+
+function updateThursday() {
+  var client = new HttpClient();
+  client.get('/thursday?date=' + document.getElementById('whichDate').value, function(response) {
+    document.getElementById('nextThursday').innerHTML = response;
+});
+}
+
+</script>
+
+</body>
+</html>
